@@ -1,8 +1,7 @@
 {
   "name": "zeplin-styled-components-extension",
   "version": "0.1.0",
-  "description":
-    "Generates styled-components snippets from colors, text styles and layers.",
+  "description": "Generates styled-components snippets from colors, text styles and layers.",
   "scripts": {
     "start": "zem start",
     "build": "zem build",
@@ -12,9 +11,12 @@
   },
   "zeplin": {
     "displayName": "styled-components",
-    "projectTypes": ["web"]
+    "projectTypes": [
+      "web"
+    ]
   },
   "dependencies": {
-    "zem": "^0.3.3"
+    "zem": "^0.3.3",
+    "zeplin-extension-style-kit": "^1.0.0"
   }
 }
