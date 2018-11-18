@@ -27,7 +27,7 @@ function filterDeclarations(declarations, textStyleMatch) {
 }
 
 function joinRules(rules) {
-  return 'styled.div`\n' + rules.join('\n') + '\n`'
+  return 'export const Box = styled.div`\n' + rules.join('\n') + '\n`'
 }
 
 function declarationsToString(declarations, variableMap, textStyleMatch) {
