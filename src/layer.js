@@ -13,32 +13,22 @@ function getVariableMap(projectColors) {
 
 function filterDeclarations(declarations, textStyleMatch) {
   return declarations.filter(d => {
-    // if (
-    //   ['font-family', 'font-size', 'line-height', 'letter-spacing', 'font-weight'].find(
-    //     v => v === d.name
-    //   )
-    // ) {
-    //   return false
-    // }
+    if (
+      textStyleMatch &&
+      (d.name === 'font-size' ||
+        d.name === 'font-family' ||
+        d.name === 'letter-spacing' ||
+        d.name === 'line-height')
+    ) {
+      return false
+    }
 
     return !(d.hasDefaultValue && d.hasDefaultValue())
   })
 }
 
-// [ TextStyle {
-//     name: 'Sample text style',
-//     fontFace: 'SFProText-Regular',
-//     fontSize: 20,
-//     fontWeight: 400,
-//     fontStyle: 'normal',
-//     fontFamily: 'SFProText',
-//     fontStretch: 'normal',
-//     textAlign: 'left',
-//     weightText: 'regular',
-//     color: Color { r: 0, g: 0, b: 0, a: 1, name: undefined },
-//     scaledFontSize: 20 },
 function declarationsToString(declarations, variableMap, textStyleMatch) {
-  const filteredDeclarations = filterDeclarations(declarations)
+  const filteredDeclarations = filterDeclarations(declarations, textStyleMatch)
   const textStyleName = textStyleMatch ? '  ${Typography.' + textStyleMatch.name + '};\n' : ''
   return `styled.div\`\n${textStyleName}${filteredDeclarations
     .map(d => `  ${d.name}: ${d.getValue({ densityDivisor: 1 }, variableMap)};`)
@@ -50,23 +40,12 @@ export default function layer(context, selectedLayer) {
   const l = new Layer(selectedLayer)
   const layerRuleSet = l.style
   const { defaultTextStyle } = selectedLayer
-  let textStyleMatch
+  const isText = selectedLayer.type === 'text' && defaultTextStyle
+  const textStyleMatch = isText ? context.project.findTextStyleEqual(defaultTextStyle) : undefined
+  console.log(textStyleMatch)
 
-  if (selectedLayer.type === 'text' && defaultTextStyle) {
+  if (isText) {
     const declarations = l.getLayerTextStyleDeclarations(defaultTextStyle)
-    // console.log(new TextStyle(defaultTextStyle).font)
-    const layerTextStyle = new TextStyle(defaultTextStyle).font
-
-    textStyleMatch = projectTextStyles.find(textStyle => {
-      return (
-        textStyle.fontFamily === layerTextStyle.fontFamily &&
-        textStyle.fontSize === layerTextStyle.fontSize &&
-        textStyle.lineHeight === layerTextStyle.lineHeight &&
-        textStyle.letterSpacing === layerTextStyle.letterSpacing
-      )
-    })
-    // console.log(projectTextStyles[0].fontSize, font.fontSize)
-    // console.log(textStyleMatch)
     declarations.forEach(p => layerRuleSet.addDeclaration(p))
   }
 
