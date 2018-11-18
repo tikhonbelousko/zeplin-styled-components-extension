@@ -51,3 +51,10 @@ export default {
   `
 }
 ```
+
+## TODO
+- Add parameter for exporting component styles without wrapping them in `styled.div`.
+- Add parameter for exporting colors with alpha channel using `hexToRgba` function.
+- Add parameter for including breakpoints.
+- Describe in README conventions for colors and typography.
+- Use number for font-weight instead of string (e.g. bold).
