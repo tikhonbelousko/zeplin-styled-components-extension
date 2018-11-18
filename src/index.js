@@ -1,4 +1,5 @@
 import layer from './layer'
+import styleguideColors from './styleguideColors'
 
 // function styleguideColors(context, colors) {}
 // function styleguideTextStyles(context, textStyles) {}
@@ -7,8 +8,8 @@ import layer from './layer'
 // function comment(context, text) {}
 
 export default {
-  layer
-  // styleguideColors,
+  layer,
+  styleguideColors
   // styleguideTextStyles,
   // exportStyleguideColors,
   // exportStyleguideTextStyles,
