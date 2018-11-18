@@ -1,17 +1,14 @@
 import layer from './layer'
 import styleguideColors from './styleguideColors'
+import styleguideTextStyles from './styleguideTextStyles'
 
-// function styleguideColors(context, colors) {}
-// function styleguideTextStyles(context, textStyles) {}
-// function exportStyleguideColors(context, colors) {}
-// function exportStyleguideTextStyles(context, textStyles) {}
-// function comment(context, text) {}
+function comment(context, text) {
+  return `/* ${text} */`
+}
 
 export default {
   layer,
-  styleguideColors
-  // styleguideTextStyles,
-  // exportStyleguideColors,
-  // exportStyleguideTextStyles,
-  // comment
+  styleguideColors,
+  styleguideTextStyles,
+  comment
 }

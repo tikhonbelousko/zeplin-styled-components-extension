@@ -5,7 +5,7 @@ function joinRules(rules) {
 }
 
 export default function styleguideColors(context, colors) {
-  const colorRules = context.project.colors.map(color => {
+  const colorRules = colors.map(color => {
     const colorValue = new Color(color).toStyleValue({ colorFormat: 'hex' })
 
     return `  ${color.name}: '${colorValue}'`

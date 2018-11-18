@@ -2,6 +2,10 @@
   "name": "zeplin-styled-components-extension",
   "version": "0.1.0",
   "description": "Generates styled-components snippets from colors, text styles and layers.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DaZzz/zeplin-styled-components-extension"
+  },
   "author": {
     "name": "Tikhon",
     "email": "tikhon.belousko@gmail.com"
@@ -15,9 +19,7 @@
   },
   "zeplin": {
     "displayName": "styled-components",
-    "projectTypes": [
-      "web"
-    ]
+    "projectTypes": ["web"]
   },
   "dependencies": {
     "zem": "^0.3.3",
