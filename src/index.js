@@ -1,14 +1,4 @@
-import Layer from 'zeplin-extension-style-kit/elements/layer'
-
-function layer(context, selectedLayer) {
-  const l = new Layer(selectedLayer)
-  const layerStyle = l.style
-  console.log(l.style)
-  return {
-    code: JSON.stringify(layerStyle),
-    language: 'js'
-  }
-}
+import layer from './layer'
 
 // function styleguideColors(context, colors) {}
 // function styleguideTextStyles(context, textStyles) {}
