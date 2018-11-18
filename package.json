@@ -16,6 +16,7 @@
     ]
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "zem": "^0.3.3",
     "zeplin-extension-style-kit": "^1.0.0"
   }
