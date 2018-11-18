@@ -2,7 +2,6 @@ import Layer from 'zeplin-extension-style-kit/elements/layer'
 import TextStyle from 'zeplin-extension-style-kit/elements/textStyle'
 import Color from 'zeplin-extension-style-kit/values/color'
 import { getUniqueLayerTextStyles } from 'zeplin-extension-style-kit/utils'
-import _ from 'lodash'
 
 function getVariableMap(projectColors) {
   return projectColors.reduce((variableMap, color) => {
@@ -27,29 +26,36 @@ function filterDeclarations(declarations, textStyleMatch) {
   })
 }
 
+function joinRules(rules) {
+  return 'styled.div`\n' + rules.join('\n') + '\n`'
+}
+
 function declarationsToString(declarations, variableMap, textStyleMatch) {
   const filteredDeclarations = filterDeclarations(declarations, textStyleMatch)
-  const textStyleName = textStyleMatch ? '  ${Typography.' + textStyleMatch.name + '};\n' : ''
-  return `styled.div\`\n${textStyleName}${filteredDeclarations
-    .map(d => `  ${d.name}: ${d.getValue({ densityDivisor: 1 }, variableMap)};`)
-    .join('\n')}\n\``
+  const textStyleMixins = textStyleMatch ? ['  ${Typography.' + textStyleMatch.name + '};'] : []
+  const rules = [
+    ...textStyleMixins,
+    ...filteredDeclarations.map(
+      d => `  ${d.name}: ${d.getValue({ densityDivisor: 1 }, variableMap)};`
+    )
+  ]
+
+  return joinRules(rules)
 }
 
 export default function layer(context, selectedLayer) {
-  const { colors: projectColors, textStyles: projectTextStyles } = context.project
   const l = new Layer(selectedLayer)
   const layerRuleSet = l.style
   const { defaultTextStyle } = selectedLayer
   const isText = selectedLayer.type === 'text' && defaultTextStyle
   const textStyleMatch = isText ? context.project.findTextStyleEqual(defaultTextStyle) : undefined
-  console.log(textStyleMatch)
 
   if (isText) {
     const declarations = l.getLayerTextStyleDeclarations(defaultTextStyle)
     declarations.forEach(p => layerRuleSet.addDeclaration(p))
   }
 
-  const variableMap = getVariableMap(projectColors)
+  const variableMap = getVariableMap(context.project.colors)
   const code = declarationsToString(layerRuleSet.declarations, variableMap, textStyleMatch)
 
   return {
